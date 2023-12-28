@@ -1,3 +1,57 @@
+# Visual Studio generated folders/dirs
+.vscode/
+.vs2019/
+.vs2022/
 bin/
 obj/
+
+# NuGet packages
+*.nuget/
+*.nupkg
+*.paket
+*.dll
+
+# Resharper dirs
+_ReSharper*/
+*.suo
+*.user
+*.resharper.user
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Windows metadata files
+Thumbs.db
+Desktop.ini
+
+# Node.js
+node_modules/
+
+# C#
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+*.exe
+*.pdb
+*.dll
+*.opendb
+*.log
+*.sqlite
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
