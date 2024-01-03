@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Chat.Data.Entities.Models
+﻿namespace Chat.Data.Entities.Models
 {
-    internal class GroupChat
+    public class GroupChat
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public GroupChat(string name)
+        {
+            Id = Id = GenerateUniqueId();
+            Name = name;
+        }
+        private static int GenerateUniqueId()
+        {
+            return Guid.NewGuid().GetHashCode();
+        }
     }
 }
