@@ -12,8 +12,8 @@ namespace Chat.Data.Entities.Models
         public bool IsAdmin { get; set; }
         public string Password { get; set; }
 
+        public ICollection<UserGroup> GroupUsers { get; set; } = new List<UserGroup>();
 
-        
         public User(string name, string surname, string email, bool isAdmin, string password)
         {
             Id = Id = GenerateUniqueId();
