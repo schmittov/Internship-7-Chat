@@ -1,14 +1,33 @@
 ﻿namespace Chat.Data.Entities.Models
 {
-    public class GroupMessage : Message
+    public class GroupMessage
     {
-        public int IdGroup { get; set; }
+        public GroupChat? GroupChat { get; set; }
 
-        public ICollection<GroupChat> GroupMessages { get; set; } = new List<GroupChat>();
+        public int Id { get; set; }
+        public int IdSender { get; set; }
+        public int GroupChatId { get; set; }
+        public string? MessageContent { get; set; }
+        public DateTimeOffset SentAt { get; set; }
 
-        public GroupMessage(int idSender, int idGroup, string messageContent): base(idSender, messageContent)
+        public GroupMessage(int idSender, int groupChatId, string messageContent)
         {
-            IdGroup = idGroup;
+            Id = GenerateUniqueId();
+            IdSender = idSender;
+            GroupChatId = groupChatId;
+            MessageContent = messageContent;
+            SentAt = DateTime.Now;
         }
-    } 
+
+        protected GroupMessage(int idSender, string messageContent)
+        {
+            IdSender = idSender;
+            MessageContent = messageContent;
+        }
+
+        private static int GenerateUniqueId()
+        {
+            return Guid.NewGuid().GetHashCode();
+        }
+    }
 }

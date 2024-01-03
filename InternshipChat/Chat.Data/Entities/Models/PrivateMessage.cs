@@ -1,17 +1,38 @@
-﻿using Chat.Data.Entities.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-namespace Chat.Data.Entities.Models
+﻿namespace Chat.Data.Entities.Models
 {
-    public class PrivateMessage : Message
+    public class PrivateMessage
     {
-        public int IdRecipient { get; set; }
+       
+        public User? User { get; set; }
 
-        public PrivateMessage(int idSender, int idRecipient, string messageContent): base(idSender, messageContent)
+        public int Id { get; set; }
+        public int IdSender { get; set; }
+        public int IdReciver { get; set; }
+        public string? MessageContent { get; set; }
+        public DateTimeOffset SentAt { get; set; }
+
+        public PrivateMessage(int idSender, int idReciver, string messageContent)
         {
-            IdRecipient = idRecipient;
+            Id = GenerateUniqueId();
+            IdSender = idSender;
+            IdReciver = idReciver;
+            MessageContent = messageContent;
+            SentAt = DateTime.Now;
+        }
+
+        protected PrivateMessage(int idSender, string messageContent)
+        {
+            IdSender = idSender;
+            MessageContent = messageContent;
+        }
+
+        private static int GenerateUniqueId()
+        {
+            return Guid.NewGuid().GetHashCode();
         }
     }
 
+    }
 
-}
+
+

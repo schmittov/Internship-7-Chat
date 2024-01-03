@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-namespace Chat.Data.Entities.Models
+﻿namespace Chat.Data.Entities.Models
 {
     public class User
     {
@@ -12,7 +9,8 @@ namespace Chat.Data.Entities.Models
         public bool IsAdmin { get; set; }
         public string Password { get; set; }
 
-        public ICollection<UserGroup> GroupUsers { get; set; } = new List<UserGroup>();
+        public ICollection<UserGroup> UserGroups { get; set; } = new List<UserGroup>();
+        public ICollection<PrivateMessage> PrivateMessages { get; set; } = new List<PrivateMessage>();
 
         public User(string name, string surname, string email, bool isAdmin, string password)
         {
