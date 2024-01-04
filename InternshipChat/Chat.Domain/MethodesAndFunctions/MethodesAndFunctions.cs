@@ -76,7 +76,7 @@ namespace Chat.Domain.MethodesAndFunctions
             return newEmail;
         }
 
-        static string GenerateChapta()
+        public static string GenerateChapta()
         {
             const string chars = "abcdefghijklmnopqrstuvwxyz";
             const string numbers = "0123456789";
@@ -89,7 +89,7 @@ namespace Chat.Domain.MethodesAndFunctions
             return randomString;
         }
 
-        static bool CheckChapta(string generatedString, string enteredString)
+        public static bool CheckChapta(string generatedString, string enteredString)
         {
             return generatedString.Equals(enteredString, StringComparison.OrdinalIgnoreCase);
         }
