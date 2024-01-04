@@ -69,7 +69,7 @@ namespace Chat.Domain.Helpers
             }
         }
 
-        public static void ChangeEmail(string userEmail, DbContextOptions<InternshipChatDbContext> options)////////
+        public static void ChangeEmail(string userEmail, DbContextOptions<InternshipChatDbContext> options)
         {
             using (var dbContext = new InternshipChatDbContext(options))
             {
@@ -87,6 +87,12 @@ namespace Chat.Domain.Helpers
                     if (existingUserWithNewEmail == null)
                     {
                         user.Email = newEmail;
+
+                        string randomChapta = MethodesAndFunctions.MethodesAndFunctions.GenerateChapta();
+                        Console.WriteLine("Kopirajte sljedeći string " + randomChapta);
+                        string insertedChapta = Console.ReadLine();
+                        MethodesAndFunctions.MethodesAndFunctions.CheckChapta(randomChapta, insertedChapta);
+
                         dbContext.SaveChanges();
 
                         Console.WriteLine("Uspješno je promjenjena adresa");
@@ -99,7 +105,7 @@ namespace Chat.Domain.Helpers
             }
         }
 
-        public static void ChangePassword(string userEmail, DbContextOptions<InternshipChatDbContext> options)///////////
+        public static void ChangePassword(string userEmail, DbContextOptions<InternshipChatDbContext> options)
         {
             using (var dbContext = new InternshipChatDbContext(options))
             {
@@ -112,6 +118,12 @@ namespace Chat.Domain.Helpers
                     Console.Write("Unesi novu lozinku: ");
                     string newPassword = Console.ReadLine();
 
+
+                    string randomChapta=MethodesAndFunctions.MethodesAndFunctions.GenerateChapta();
+                    Console.WriteLine("Kopirajte sljedeći string " + randomChapta);
+                    string insertedChapta=Console.ReadLine();
+                    MethodesAndFunctions.MethodesAndFunctions.CheckChapta(randomChapta,insertedChapta);
+                    
                     user.Password = newPassword;
                     dbContext.SaveChanges();
 
@@ -186,9 +198,6 @@ namespace Chat.Domain.Helpers
                                 Console.ReadKey();
                                 return;
                             }
-
-                            Console.ReadKey();
-                            return;
                     }
                 }
             }
