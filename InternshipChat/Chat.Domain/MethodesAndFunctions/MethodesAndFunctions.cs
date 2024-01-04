@@ -1,25 +1,64 @@
-﻿using System.Text.RegularExpressions;
-
+﻿using Chat.Data.Entities;
+using Chat.Data.Entities.Models;
+using Chat.Domain.Helpers;
+using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 namespace Chat.Domain.MethodesAndFunctions
 {
+
     public class MethodesAndFunctions
     {
         static Random random = new Random();
-        public static void LogIn()
+        public static string LogIn(DbContextOptions<InternshipChatDbContext> options)
         {
-            string mail = CheckIfMailExist();
-            string password= CheckIfCorrectPassword(mail);
-            Console.WriteLine(mail+" "+password);
+            string password,email;
+
+            do
+            {
+                Console.WriteLine("Unesite email adresu.");
+                email = Console.ReadLine().Trim();
+            } while (!UserHelper.FindIfEmailExists(email, options));
+            
+            do
+            {
+                Console.WriteLine("Unesite lozinku.");
+                password = Console.ReadLine().Trim();
+                if(!UserHelper.FindUserByEmailPassword(email, password, options))
+                    TimeOut();
+            } while (!UserHelper.FindUserByEmailPassword(email, password, options));
+                return email;
+            
         }
 
-        public static void Registration()
+        public static string Registration(DbContextOptions<InternshipChatDbContext> options)
         {
-            Console.Write("Unesite email: ");
-            string newEmail = CheckIfEmptyString();
+            string newEmail, newPassword, newPasswordCheck, name, surname;
+            do
+            {
+                Console.WriteLine("Unesite ime");
+                name = Console.ReadLine();
+                Console.WriteLine("Unesite prezime");
+                surname = Console.ReadLine();
 
-            Console.Write("Unesite lozinku: ");
-            string newPassword = CheckIfEmptyString();
 
+                do
+                {
+                    Console.Write("Unesite email: ");
+                    newEmail = Console.ReadLine().Trim();
+                }
+                while (!CheckIsEmailValid(newEmail));
+                
+            } while (UserHelper.FindIfEmailExists(newEmail, options));
+            
+            do
+            {
+                Console.Write("Unesite lozinku: ");
+                newPassword = Console.ReadLine().Trim();
+
+                Console.Write("Unesite ponovno lozinku: ");
+                newPasswordCheck = Console.ReadLine().Trim();
+            } while (newPassword!=newPasswordCheck);
+            
 
             string randomString = GenerateChapta();
             Console.WriteLine($"Kopirajte sljedeći random string: {randomString}");
@@ -27,11 +66,14 @@ namespace Chat.Domain.MethodesAndFunctions
             string confirmation = CheckIfEmptyString();
 
             if (CheckChapta(randomString,confirmation))
-                Console.WriteLine("Uspijeli ste");
+                Console.WriteLine("Uspješno ste se registrirali");
             else
-                Console.WriteLine("Niste uspijeli");
+                Console.WriteLine("Pokušajte ponovno");
 
-            //add new user to the database
+            var newUser = new User(name, surname,newEmail,false,newPassword);
+
+            UserHelper.AddNewUser(newUser,options);
+            return newEmail;
         }
 
         static string GenerateChapta()
@@ -75,31 +117,12 @@ namespace Chat.Domain.MethodesAndFunctions
             return enteredString;
         }
 
-        static string CheckIfMailExist()
+        static void TimeOut()
         {
-            //if mail exists return true, else false
-            string enteredEmail;
-            do
-            {
-                Console.WriteLine("Unesite mail.");
-                enteredEmail = CheckIfEmptyString();
-            } while (false);
-            return enteredEmail;
+            Console.WriteLine("Pogrešna lozinka. Pauza od 10 sekundi...");
+            Thread.Sleep(1000);
+            Console.WriteLine("Nastavak izvođenja programa nakon pauze.");
         }
-        static string CheckIfCorrectPassword(string enteredEmail)
-        {
-            //if email and password matches return true, else false
-            string enteredPassword;
-           
-            do
-            {
-                Console.WriteLine("Unesite lozinku.");
-                enteredPassword = CheckIfEmptyString();
-            } while (false);//do while password matches email + 30 sec pause
-
-            return enteredPassword;
-        }
-
-
     }
 }
+
