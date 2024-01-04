@@ -8,6 +8,7 @@ namespace Chat.Data.Entities
 {
     public class InternshipChatDbContext : DbContext
     {
+        
         public InternshipChatDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -61,7 +62,7 @@ namespace Chat.Data.Entities
 
             config.Providers
                 .First()
-                .TryGet("connectionStrings:add:InternshipChat:connectionString", out var connectionString);
+                .TryGet("connectionStrings:add:\"Server=localhost;Port=5432;Database=InternshipChatDB;User Id=postgres;Password=5283;\":connectionString", out var connectionString);
 
             var options = new DbContextOptionsBuilder<InternshipChatDbContext>()
                 .UseNpgsql(connectionString)
@@ -70,4 +71,5 @@ namespace Chat.Data.Entities
             return new InternshipChatDbContext(options);
         }
     }
+
 }

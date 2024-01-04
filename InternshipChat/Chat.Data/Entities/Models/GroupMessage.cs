@@ -16,7 +16,7 @@
             IdSender = idSender;
             GroupChatId = groupChatId;
             MessageContent = messageContent;
-            SentAt = DateTime.Now;
+            SentAt = DateTimeOffset.UtcNow;
         }
 
         protected GroupMessage(int idSender, string messageContent)
